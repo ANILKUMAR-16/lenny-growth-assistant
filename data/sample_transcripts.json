@@ -1,0 +1,92 @@
+[
+  {
+    "id": "ep-001",
+    "title": "How Airbnb Achieved Product-Market Fit",
+    "source_url": "https://www.lennyspodcast.com/how-airbnb-achieved-product-market-fit/",
+    "published_at": "2023-03-15",
+    "speakers": ["Lenny Rachitsky", "Brian Chesky"],
+    "duration_minutes": 92,
+    "chunks": [
+      {
+        "timestamp": "00:02:10",
+        "text": "Lenny: Brian, let's start at the very beginning. You've talked about the early days of Airbnb many times, but what does product-market fit actually feel like from the inside? Brian: It's an interesting question because when you're in it, you don't really know. Looking back, the signal was when we stopped pushing the product and users started pulling it. We had these three customers in New York — three hosts — who were booking out every single weekend. We weren't doing anything special for them. They just loved it."
+      },
+      {
+        "timestamp": "00:08:45",
+        "text": "Lenny: You've described this idea of doing things that don't scale. Can you expand on what that meant for Airbnb specifically? Brian: Absolutely. Joe and I flew to New York with a wide-angle camera and personally photographed every listing. We knocked on doors. We sat with hosts for hours, understanding why they listed. The data showed that professional photography increased bookings by 2-3x in our test. But more importantly, we understood the emotional job-to-be-done: hosts wanted to feel trusted, seen, and safe. That shaped our entire trust and safety product roadmap for years."
+      },
+      {
+        "timestamp": "00:17:30",
+        "text": "Lenny: What was the growth lever that really cracked open the early market? Brian: Without a doubt, it was the Craigslist integration. This is the thing people always ask about. We reverse-engineered Craigslist's posting flow — it had no official API — and we built a tool that let Airbnb hosts cross-post to Craigslist with one click. Craigslist had millions of users looking for short-term rentals. We essentially parasitically tapped into their demand without spending a dollar on paid acquisition. It was scrappy, slightly gray area, but it moved the needle from dozens of bookings per week to hundreds overnight."
+      },
+      {
+        "timestamp": "00:28:00",
+        "text": "Lenny: Let's talk about retention. Early marketplace retention is notoriously hard. How did you keep hosts coming back? Brian: Host retention came down to one thing in the early days: the first booking experience. If a host had a bad first guest, they were gone. So we obsessed over the quality of the very first booking. We introduced guest profiles, reviews on both sides, and the host guarantee — $50,000 host protection insurance. Each of these reduced the fear of the unknown, which was the #1 reason hosts churned after the first experience."
+      },
+      {
+        "timestamp": "00:39:15",
+        "text": "Lenny: What's your mental model for building growth loops vs. growth hacks? Brian: Growth hacks are one-time gains. They're like antibiotics — effective once, then resistant. Growth loops are compounding systems. Our core loop was: guest books → has great experience → tells 5 friends → 2 friends become guests → 1 becomes a host → generates new supply → attracts new demand. The viral coefficient was never above 1.0 in the early days, but by reducing friction at each step and increasing the quality of the core experience, we pushed it above 1.0. Once you cross 1.0, you have organic compounding growth."
+      }
+    ]
+  },
+  {
+    "id": "ep-002",
+    "title": "The North Star Metric Framework with Amplitude's CEO",
+    "source_url": "https://www.lennyspodcast.com/north-star-metric-framework-amplitude/",
+    "published_at": "2023-06-22",
+    "speakers": ["Lenny Rachitsky", "Spenser Skates"],
+    "duration_minutes": 78,
+    "chunks": [
+      {
+        "timestamp": "00:04:30",
+        "text": "Lenny: Spenser, you've thought about metrics more than almost anyone I know. What's the single biggest mistake companies make when choosing their North Star Metric? Spenser: They pick a vanity metric that correlates with revenue but doesn't actually cause retention. Monthly active users is the classic one. MAU tells you how many people showed up, not whether your product delivered value. The North Star should be an action metric — something users do that reflects genuine value exchange. For Amplitude, our North Star is 'Weekly Learning Users' — users who query their data and act on an insight. That behavior predicts expansion revenue with 87% accuracy."
+      },
+      {
+        "timestamp": "00:13:20",
+        "text": "Lenny: How do you structure the tree beneath a North Star? Spenser: We use what we call the Input Metric Tree. At the top is your North Star. Below it are three to five input metrics that your teams can directly influence. These are acquisition, activation, engagement, and retention levers. Each input metric maps to a team or a squad. Critically, every experiment run by any team must trace back to moving at least one input metric. If you can't draw that line, you don't ship the experiment. This creates strategic coherence across dozens of product teams."
+      },
+      {
+        "timestamp": "00:24:45",
+        "text": "Lenny: What's the activation metric you'd recommend for B2B SaaS? Spenser: The magic moment metric. Every successful B2B SaaS has one. For Slack, it was 2,000 messages sent within a team — that was their internal finding for predicting long-term retention. For Dropbox, it was storing one file in one folder on one device. The principle is: find the earliest, simplest action that strongly predicts a user staying 90 days. Run a survival analysis on your cohorts. The action that best separates churned vs. retained users at day 7 is your activation event. Instrument your onboarding entirely around getting users to that moment as fast as possible."
+      },
+      {
+        "timestamp": "00:35:10",
+        "text": "Lenny: How do you avoid metric gaming? Spenser: This is a huge problem. When a measure becomes a target, it ceases to be a good measure — Goodhart's Law. Our mitigation is to always pair a metric with a counter-metric. If your North Star is Weekly Learning Users, your counter-metric might be Data Quality Score or Query Error Rate. If a team games WLU by sending spam notifications that force logins, the counter-metrics will flag it. We also do quarterly metric health reviews where we assess whether the metric is still predictive of the outcomes we care about. Metrics have a shelf life."
+      },
+      {
+        "timestamp": "00:48:30",
+        "text": "Lenny: For an early-stage startup with no data, where do you even start? Spenser: Customer conversations. Full stop. You don't need data to find your North Star when you have fewer than 1,000 users. Talk to your best 10 customers — the ones who would be very disappointed if your product disappeared. Ask them: what's the one thing you did in our product before you became addicted to it? The answer is almost always your activation event and your North Star rollup. Data confirms what great founders already intuit from being close to customers. Don't outsource your intuition to dashboards too early."
+      }
+    ]
+  },
+  {
+    "id": "ep-003",
+    "title": "Building a Referral Engine: Lessons from Dropbox and PayPal",
+    "source_url": "https://www.lennyspodcast.com/building-referral-engine-dropbox-paypal/",
+    "published_at": "2023-09-08",
+    "speakers": ["Lenny Rachitsky", "Gustaf Alstromer"],
+    "duration_minutes": 85,
+    "chunks": [
+      {
+        "timestamp": "00:05:00",
+        "text": "Lenny: Gustaf, you led growth at Airbnb for years and now you're a partner at YC. What's the referral program structure that you see working consistently? Gustaf: The best referral programs give value to both sides — the referrer and the referee — but the value needs to be asymmetric in a specific way. The referee gets immediate tangible value: Dropbox gave 500MB of free storage instantly. The referrer gets social currency first, then tangible value on conversion: 'You gave your friend 500MB' feels good before they get their own 500MB. This sequencing is deliberate. It taps into reciprocity and altruism before self-interest."
+      },
+      {
+        "timestamp": "00:14:20",
+        "text": "Lenny: What made Dropbox's referral program so uniquely effective? Gustaf: Three things. First, the incentive was deeply aligned with the product's core value. More storage. You give someone storage, they use Dropbox more, they refer more people. It's a self-reinforcing loop. Second, the sharing moment was embedded in the natural product flow — you share a Dropbox folder, the recipient needs an account to access it. Referral happened as a side effect of normal usage. Third, they made the mechanics transparent. The referral dashboard showed you exactly how much storage you'd earned and from whom. That gamification created habitual checking and re-sharing."
+      },
+      {
+        "timestamp": "00:26:45",
+        "text": "Lenny: PayPal's growth story is legendary. What can modern companies learn from it? Gustaf: PayPal's insight was about payment network effects. Every person you send money to has to sign up to claim it. So the referral mechanism was baked into the core transaction. You sent $10 to a friend via email — they had to create a PayPal account to receive it. PayPal also paid $10 to both sides in the early days, burning cash to grow the network. But here's the key: they targeted eBay power users first. High-frequency transactors who would trigger hundreds of referrals. It's the classic 'find your super users and design for them' playbook."
+      },
+      {
+        "timestamp": "00:37:10",
+        "text": "Lenny: How do you diagnose why a referral program isn't working? Gustaf: I use a three-layer diagnosis. Layer one: motivation. Does the user actually want to refer? If NPS is below 40, fix the product before fixing referral. Layer two: friction. Is the sharing flow simple enough? Every extra step kills referral rate by 20-30%. A phone number copy flow versus a native share sheet is the difference between 2% and 8% referral rates. Layer three: incentive-product fit. Is the incentive something your best users actually want? Cash works universally but feels transactional. Product credits work for power users. Status and recognition work for community-driven products."
+      },
+      {
+        "timestamp": "00:51:00",
+        "text": "Lenny: What's the biggest referral program mistake you see at YC companies? Gustaf: Over-engineering the fraud prevention before the program has proven it works. Founders spend three weeks building fraud detection for a referral program that gets 50 referrals total. Ship it, measure it, prove the unit economics work, then invest in fraud prevention proportionally. The second mistake is not closing the loop with the referrer. When your friend signs up, tell the referrer immediately — push notification, email, in-app badge. That moment of social validation is more motivating than the incentive itself and drives the referrer to refer again."
+      }
+    ]
+  }
+]
