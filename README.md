@@ -1,7 +1,6 @@
 # 🚀 Lenny Growth Assistant
 
-> An AI-powered growth advisor grounded in Lenny Rachitsky's podcast transcripts.
-> Built by **Oogway Labs** — ask growth questions, generate Ship 30 essays, and explore product strategy.
+> An AI-powered growth advisor grounded in Lenny Rachitsky's podcast transcripts. Ask growth questions, generate Ship 30 essays, and explore product strategy.
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?logo=fastapi)](https://fastapi.tiangolo.com)
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react)](https://react.dev)
@@ -12,193 +11,223 @@
 
 ## ✨ Features
 
-| Feature | Description |
-|---------|-------------|
-| 🔍 **RAG Chat** | Ask questions grounded in Lenny's podcast transcripts with inline citations |
-| 🔀 **Model Toggle** | Switch between local Ollama (🦙 llama3.2) and cloud Claude / GPT-4o |
-| ✍️ **Ship 30 Skill** | Generate ~1,250-word structured essays from any growth topic |
-| 📄 **Artifact Viewer** | Side-by-side Markdown renderer + sandboxed HTML preview |
-| 🛡 **Security Badge** | HTML sanitization with XSS detection and transparent flag reporting |
-| 💾 **Session Persistence** | Full conversation history stored in PostgreSQL |
-| 📊 **Citation Engine** | pgvector cosine similarity with source URLs and confidence scores |
+| Feature                    | Description                                                                   |
+| -------------------------- | ----------------------------------------------------------------------------- |
+| 🔍 **RAG Chat**            | Ask questions grounded in Lenny's podcast transcripts, with source references |
+| 🔀 **Model Toggle**        | Switch between local Ollama (`llama3.2`) and supported cloud models           |
+| ✍️ **Ship 30 Skill**       | Generate structured, long-form essays from growth topics                      |
+| 📄 **Artifact Viewer**     | View Markdown content and preview HTML in a sandboxed environment             |
+| 🛡 **Security Badge**      | HTML sanitization with XSS detection and flag reporting                       |
+| 💾 **Session Persistence** | Store conversation history in PostgreSQL                                      |
+| 📊 **Citation Engine**     | Use pgvector similarity search to retrieve relevant transcript passages       |
 
 ---
 
 ## 🏗 Architecture
 
-```
-frontend (React/Vite/Tailwind) ──► backend (FastAPI/Python)
-                                          │
-                                    ┌─────┴──────┐
-                                PostgreSQL      LLM Router
-                               (pgvector)    ┌───┴───────┐
-                                            Ollama  Anthropic/OpenAI
+```text
+Frontend (React / Vite / Tailwind CSS)
+                 │
+                 ▼
+Backend (FastAPI / Python)
+                 │
+          ┌──────┴──────┐
+          ▼             ▼
+   PostgreSQL       LLM Router
+   + pgvector           │
+                  ┌─────┴─────┐
+                  ▼           ▼
+               Ollama    Cloud Models
+                         (if configured)
 ```
 
-See [`docs/architecture.md`](docs/architecture.md) for full details.
+See [`docs/architecture.md`](docs/architecture.md) for more details.
 
 ---
 
-## ⚡ Quick Start — Docker Compose (Recommended)
+## ⚡ Quick Start — Docker Compose
 
 ### Prerequisites
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
-- *(Optional)* [Ollama](https://ollama.ai) for local model inference
 
-### 1. Clone & Configure
+* [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
+* [Ollama](https://ollama.com/) for local model inference, if using a local model
+
+### 1. Clone and configure
+
+Clone this repository, navigate into the project directory, and copy the environment template:
 
 ```bash
-# Copy environment template
 cp .env.example .env
 ```
 
-Edit `.env` with your preferred settings:
+Edit `.env` and configure your preferred model provider:
+
 ```env
-MODEL_PROVIDER=ollama          # or: anthropic / openai
-ANTHROPIC_API_KEY=sk-ant-...   # if using Anthropic
-OPENAI_API_KEY=sk-...          # if using OpenAI
+MODEL_PROVIDER=ollama
+ANTHROPIC_API_KEY=
+OPENAI_API_KEY=
 ```
 
-### 2. (Optional) Set up Ollama locally
+Add the appropriate API key only if you choose a supported cloud provider.
+
+### 2. Set up Ollama (optional)
+
+Install Ollama, then run:
 
 ```bash
-# Install Ollama from https://ollama.ai
-ollama serve                   # start the server
-ollama pull llama3.2           # download the model (~2GB)
+ollama serve
+ollama pull llama3.2
 ```
 
-### 3. Start all services
+The model download is approximately 2 GB.
+
+### 3. Start the application
 
 ```bash
 docker-compose up --build
 ```
 
-This will:
-1. Start PostgreSQL with pgvector extension
-2. Build and start the FastAPI backend (includes embedding model download ~85MB)
-3. Build and start the React frontend via nginx
+This starts the configured services:
 
-**First startup takes 3–5 minutes** due to embedding model download.
+1. PostgreSQL with the pgvector extension
+2. The FastAPI backend
+3. The React frontend served through Nginx
 
-### 4. Seed the knowledge base
+The first startup may take several minutes while dependencies and the embedding model are prepared.
+
+### 4. Load the transcript data
+
+Once the backend is running, send a request to the ingestion endpoint:
 
 ```bash
 curl -X POST http://localhost:8000/ingest
 ```
 
-### 5. Open the app
+### 5. Open the application
 
-| Service | URL |
-|---------|-----|
-| **Frontend** | http://localhost:3000 |
-| **API Docs** | http://localhost:8000/docs |
-| **Health Check** | http://localhost:8000/health |
+| Service               | URL                          |
+| --------------------- | ---------------------------- |
+| **Frontend**          | http://localhost:3000        |
+| **API Documentation** | http://localhost:8000/docs   |
+| **Health Check**      | http://localhost:8000/health |
 
 ---
 
-## 🛠 Local Development (Without Docker)
+## 🛠 Local Development
 
 ### Backend
 
 ```bash
 cd backend
-
-# Create virtual environment
 python -m venv .venv
-.venv\Scripts\activate        # Windows
-# source .venv/bin/activate   # Mac/Linux
+```
 
-# Install dependencies
+Activate the environment on Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+On macOS or Linux:
+
+```bash
+source .venv/bin/activate
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
+```
 
-# Set up environment
-cp ../.env.example .env
-# Edit .env with your DATABASE_URL pointing to a local Postgres
+Configure the environment variables using `.env.example`. Make sure the database connection settings match your local PostgreSQL setup.
 
-# Run dev server
+Start the backend:
+
+```bash
 uvicorn app.main:app --reload --port 8000
 ```
 
 ### Frontend
 
+Open a separate terminal:
+
 ```bash
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start dev server (proxies /api → localhost:8000)
 npm run dev
 ```
 
-Frontend available at: http://localhost:5173
+The frontend development server is available at:
+
+http://localhost:5173
 
 ---
 
 ## 🧪 Running Tests
 
+From the backend directory:
+
 ```bash
-cd backend
-
-# Install test dependencies (included in requirements.txt)
 pip install -r requirements.txt
-
-# Run all tests
 pytest -v
+```
 
-# Run specific test file
+To run individual test files:
+
+```bash
 pytest tests/test_api.py -v
 pytest tests/test_rag.py -v
+```
 
-# Run with coverage
+To run tests with coverage:
+
+```bash
 pytest --cov=app --cov-report=term-missing
 ```
 
-Tests use:
-- **SQLite in-memory** (no live Postgres required)
-- **Mocked LLM calls** (no Ollama or API keys required)
-- `pytest-asyncio` for async test support
+The test suite is configured to use an in-memory SQLite database and mocked LLM calls where supported, so tests may not require a live PostgreSQL instance or external AI service.
 
 ---
 
 ## 📁 Project Structure
 
-```
-Oogway/
+```text
+lenny-growth-assistant/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py          # FastAPI app & endpoints
-│   │   ├── config.py        # Pydantic settings
-│   │   ├── db.py            # PostgreSQL + pgvector models
-│   │   ├── rag.py           # Embeddings, retrieval, LLM router
-│   │   ├── artifact.py      # HTML/Markdown detection & sanitization
+│   │   ├── main.py
+│   │   ├── config.py
+│   │   ├── db.py
+│   │   ├── rag.py
+│   │   ├── artifact.py
 │   │   └── skills/
-│   │       └── ship30.py    # Ship 30 for 30 essay skill
+│   │       └── ship30.py
 │   ├── tests/
-│   │   ├── test_api.py      # API integration tests
-│   │   └── test_rag.py      # RAG unit tests
+│   │   ├── test_api.py
+│   │   └── test_rag.py
 │   ├── requirements.txt
 │   └── Dockerfile
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── ChatInterface.jsx   # Chat UI + model toggle
-│   │   │   └── ArtifactViewer.jsx  # Markdown & sandboxed HTML viewer
-│   │   ├── App.jsx          # Root layout
-│   │   ├── main.jsx         # React entry point
-│   │   └── index.css        # Global styles (Tailwind + custom)
+│   │   │   ├── ChatInterface.jsx
+│   │   │   └── ArtifactViewer.jsx
+│   │   ├── App.jsx
+│   │   ├── main.jsx
+│   │   └── index.css
 │   ├── package.json
 │   ├── vite.config.js
 │   ├── tailwind.config.js
 │   └── Dockerfile
 ├── docs/
-│   ├── PRD.md               # Product requirements
-│   ├── architecture.md      # System design
-│   └── design.md            # UI/UX spec
+│   ├── PRD.md
+│   ├── architecture.md
+│   └── design.md
 ├── data/
-│   └── sample_transcripts.json  # Lenny podcast transcript data
+│   └── sample_transcripts.json
 ├── transcripts/
-│   └── README.md            # Transcript logging schema
+│   └── README.md
 ├── docker-compose.yml
 ├── .env.example
 ├── pytest.ini
@@ -210,9 +239,15 @@ Oogway/
 ## 🔌 API Reference
 
 ### `GET /health`
-Check database and Ollama connectivity.
+
+Checks application and configured service connectivity.
 
 ### `POST /chat`
+
+Accepts a question and returns an AI-generated answer using relevant transcript information.
+
+Example request:
+
 ```json
 {
   "message": "How did Airbnb achieve product-market fit?",
@@ -223,31 +258,40 @@ Check database and Ollama connectivity.
 ```
 
 ### `POST /skills/ship30`
+
+Generates a structured essay based on a growth topic and relevant transcript information.
+
+Example request:
+
 ```json
 {
   "topic": "How referral programs create compounding growth",
-  "model_provider": "anthropic",
+  "model_provider": "ollama",
   "top_k": 5
 }
 ```
 
 ### `POST /ingest`
-Seeds `data/sample_transcripts.json` into pgvector. No body required.
+
+Loads the configured sample transcript data into the vector database. No request body is required.
 
 ### `GET /sessions/{session_id}/history`
-Returns full message history for a session.
+
+Retrieves the conversation history associated with a session.
+
+Explore and test these endpoints through the interactive API documentation at `http://localhost:8000/docs`.
 
 ---
 
-## 🔒 Security Notes
+## 🔒 Security Considerations
 
-- HTML artifacts are sanitized (script tags, event handlers, iframes removed) before display
-- Frontend renders HTML in a sandboxed `<iframe sandbox="allow-scripts">` with no parent DOM access
-- API keys are loaded from environment variables only — never hardcoded or logged
-- CORS is restricted to configured origins
+* HTML artifacts are sanitized before display.
+* HTML previews run inside a sandboxed iframe.
+* API keys are configured through environment variables rather than hardcoded in application code.
+* Cross-origin requests are restricted to configured origins.
 
 ---
 
 ## 📝 License
 
-MIT © 2026 Oogway Labs
+See the repository's existing `LICENSE` file for licensing terms.
