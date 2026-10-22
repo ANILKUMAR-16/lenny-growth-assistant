@@ -294,4 +294,4 @@ Explore and test these endpoints through the interactive API documentation at `h
 
 ## 📝 License
 
-See the repository's existing `LICENSE` file for licensing terms.
+MIT © 2026 Oogway Labs
